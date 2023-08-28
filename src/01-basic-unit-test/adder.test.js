@@ -21,3 +21,20 @@ it('adds two numbers together', () => {
     //  See the docs for more: https://jestjs.io/docs/expect
     expect(result).toEqual(expectedSum)
 })
+
+
+// Why do we like unit tests? It lets us test our fuctions with a variety of different inputs.
+// It wouldn't be very useful to just test a bunch of different values. The first test covers our "happy path" where everything works as expected.
+it('error is thrown when adding non-numbers', () => {
+    const firstNumber = "burger"
+    const secondNumber = 2
+
+    // If you want to validate errors are thrown, you need to wrap the function in a closure so we can pass it to expect statement
+    function addBadInputs() {
+        return Add(firstNumber, secondNumber)
+    }
+
+    // toThrow has many different overrides. This one takes regex and validates that the thrown error matches it
+    //  more about toThrow: https://jestjs.io/docs/expect#tothrowerror
+    expect(addBadInputs).toThrow(/input is not a number/)
+})
