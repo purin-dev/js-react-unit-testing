@@ -5,6 +5,9 @@ import userEvent from "@testing-library/user-event";
 
 // Writing tests for react components is similar to writing normal jest tests
 // The main differences come from having to render the component and simulate user input.
+// For that purpose, we use React Testing Library (RTL)
+// More about RTL - https://testing-library.com/docs/react-testing-library/example-intro
+// RTL cheat sheet - https://raw.githubusercontent.com/testing-library/react-testing-library/main/other/cheat-sheet.pdf
 it('starts the counter at 0', async ()=>{
     // ARRANGE
     // First, we render the component. You can pass props here if your component has them.
