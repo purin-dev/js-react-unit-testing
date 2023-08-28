@@ -11,7 +11,7 @@ export default function Counter() {
             <span id={"count"}>Count: {count}</span>
             <br/>
             <button type={"button"} onClick={(evt)=>{setCount(count + 1)}}>Increase</button>
-            <button type={"button"} onClick={(evt)=>{setCount(count + 1)}}>Decrease</button>
+            <button type={"button"} onClick={(evt)=>{setCount(count - 1)}}>Decrease</button>
         </>
 
     )
