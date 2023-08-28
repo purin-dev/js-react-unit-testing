@@ -1,4 +1,4 @@
-import {render} from "@testing-library/react";
+import {render, waitFor, screen} from "@testing-library/react";
 import AmiiboApiContext from "./AmiiboApiContext";
 
 
@@ -15,11 +15,23 @@ beforeEach(() => {
     // Clear all instances and calls to constructor and all methods:
     AmiiboApiClient.mockClear();
 });
-it("calls the API and displays the list of amiibos returned", ()=>{
-    let mockApi = new AmiiboApiClient()
 
-    // Since our component gets the api client through the context, we can pass our mocked on in like that too
+it("calls the API and displays the list of amiibos returned", async ()=>{
+    // Arrange - Set up our mocked methods
+    let mockApi = new AmiiboApiClient()
+    let mockGetAmiibos = mockApi.getAllAmiibos
+
+    //  We'll set up the getAmiibos method on our mocked API client to return a known value we can assert on
+    //  Since the method returns a promise, we use mockResolvedValue to mock what the promise resolves to
+    mockGetAmiibos.mockResolvedValue({data: {amiibo: [{tail: "abc123", gameSeries: "game", name: "burger"}]}, error: false})
+
+    // Act -  Since our component gets the api client through the context, we can pass our mocked on in like that too
     render(<AmiiboApiContext.Provider value={mockApi}><AmiiboList/></AmiiboApiContext.Provider>)
 
+    // Assert - We can use this matcher to assert that our mock was called once
+    expect(mockGetAmiibos).toHaveBeenCalledTimes(1)
+
+    // since our data fetching is async, we'll use findBy and await it, so that we wait for it to exist in the document
+    expect(await screen.findByText(/game - burger/i)).toBeInTheDocument()
 
 })
