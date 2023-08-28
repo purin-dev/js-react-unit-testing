@@ -38,3 +38,13 @@ it('increases the counter when increase is clicked', async ()=>{
     expect(screen.getByText(/count/i)).toHaveTextContent(/count: 1/i)
 
 })
+
+// Note that our test function here is async. This is so we can await user input events.
+it('decreases the counter when decrease is clicked', async ()=>{
+    render(<Counter></Counter>)
+
+    await userEvent.click(screen.getByRole('button',{name: "Decrease"}))
+
+    expect(screen.getByText(/count/i)).toHaveTextContent(/count: -1/i)
+
+})
